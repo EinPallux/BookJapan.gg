@@ -34,6 +34,16 @@ body {
     border-bottom: 1px solid rgba(46, 58, 89, 0.1);
 }
 
+.header-main nav {
+    display: flex !important;
+}
+
+@media (min-width: 768px) {
+    .header-main nav {
+        display: flex !important;
+    }
+}
+
 .logo-container {
     animation: fadeInDown 0.6s ease;
 }
@@ -43,18 +53,22 @@ body {
 }
 
 .nav-link {
-    display: flex;
+    display: flex !important;
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     background: transparent;
     border: none;
+    color: #2E3A59;
     color: var(--japan-indigo);
     font-weight: 500;
+    font-size: 0.95rem;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
+    opacity: 1;
+    visibility: visible;
 }
 
 .nav-link::after {
@@ -71,10 +85,12 @@ body {
 
 .nav-link:hover {
     background: rgba(255, 183, 197, 0.1);
+    color: #4A5F8C;
     color: var(--japan-blue);
 }
 
 .nav-link.active {
+    color: #FF8FA3;
     color: var(--sakura-dark);
     background: rgba(255, 183, 197, 0.15);
 }
@@ -85,6 +101,11 @@ body {
 
 .nav-link i {
     font-size: 1.1rem;
+    opacity: 1;
+}
+
+.nav-link span {
+    opacity: 1;
 }
 
 /* Mobile Menu */
@@ -470,6 +491,20 @@ body {
 /* ===================================
    Responsive Design
    =================================== */
+
+/* Desktop navigation - always visible on desktop */
+@media (min-width: 768px) {
+    header nav {
+        display: flex !important;
+    }
+}
+
+/* Mobile - hide desktop nav, show hamburger */
+@media (max-width: 767px) {
+    header nav {
+        display: none !important;
+    }
+}
 
 @media (max-width: 768px) {
     .dashboard-card {
