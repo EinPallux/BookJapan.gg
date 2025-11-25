@@ -133,7 +133,9 @@ const BudgetTool = {
                         <!-- Chart -->
                         <div class="dashboard-card">
                             <h4 class="text-lg font-semibold text-japan-indigo mb-4">Budget Breakdown</h4>
-                            <canvas id="auto-budget-chart" height="250"></canvas>
+                            <div style="position: relative; height: 300px; width: 100%;">
+                                <canvas id="auto-budget-chart"></canvas>
+                            </div>
                         </div>
                     </div>
                     
@@ -206,7 +208,9 @@ const BudgetTool = {
                 <!-- Manual Budget Chart -->
                 <div class="dashboard-card">
                     <h4 class="text-lg font-semibold text-japan-indigo mb-4">Your Budget Breakdown</h4>
-                    <canvas id="manual-budget-chart" height="250"></canvas>
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <canvas id="manual-budget-chart"></canvas>
+                    </div>
                 </div>
             </div>
             
@@ -409,6 +413,10 @@ const BudgetTool = {
             return;
         }
         
+        // Set explicit dimensions
+        ctx.width = 400;
+        ctx.height = 400;
+        
         // Destroy existing chart
         if (this.chartInstance) {
             this.chartInstance.destroy();
@@ -429,11 +437,9 @@ const BudgetTool = {
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: {
-                        duration: 0 // Disable animations to prevent infinite loop
-                    },
+                    responsive: false, // Disable responsive to prevent resize loop
+                    maintainAspectRatio: true,
+                    animation: false, // Completely disable animations
                     plugins: {
                         legend: {
                             position: 'bottom',
@@ -616,6 +622,10 @@ const BudgetTool = {
         
         const categories = App.data.budget.categories.filter(cat => cat.amount > 0);
         
+        // Set explicit dimensions
+        ctx.width = 400;
+        ctx.height = 400;
+        
         // Destroy existing chart
         if (this.manualChartInstance) {
             this.manualChartInstance.destroy();
@@ -640,11 +650,9 @@ const BudgetTool = {
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: {
-                        duration: 0 // Disable animations to prevent infinite loop
-                    },
+                    responsive: false, // Disable responsive to prevent resize loop
+                    maintainAspectRatio: true,
+                    animation: false, // Completely disable animations
                     plugins: {
                         legend: {
                             position: 'bottom',
