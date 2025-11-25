@@ -931,8 +931,8 @@ const BudgetTool = {
 };
 
 // Add CSS for tabs
-const style = document.createElement('style');
-style.textContent = `
+const budgetStyle = document.createElement('style');
+budgetStyle.textContent = `
     .budget-tab {
         padding: 0.75rem 1.5rem;
         background: transparent;
@@ -965,7 +965,7 @@ style.textContent = `
         animation: fadeIn 0.3s ease;
     }
 `;
-document.head.appendChild(style);
+document.head.appendChild(budgetStyle);
 
 // Initialize when page loads
 if (document.readyState === 'loading') {
