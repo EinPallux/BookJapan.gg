@@ -404,46 +404,57 @@ const BudgetTool = {
     
     createAutoBudgetChart(breakdown) {
         const ctx = document.getElementById('auto-budget-chart');
-        if (!ctx) return;
-        
-        if (this.chartInstance) {
-            this.chartInstance.destroy();
+        if (!ctx) {
+            console.warn('Chart canvas not found');
+            return;
         }
         
-        this.chartInstance = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: breakdown.map(cat => cat.name),
-                datasets: [{
-                    data: breakdown.map(cat => cat.amount),
-                    backgroundColor: breakdown.map(cat => cat.color),
-                    borderWidth: 2,
-                    borderColor: '#fff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            font: { family: 'Lexend', size: 12 }
-                        }
+        // Destroy existing chart
+        if (this.chartInstance) {
+            this.chartInstance.destroy();
+            this.chartInstance = null;
+        }
+        
+        // Small delay to ensure DOM is ready
+        setTimeout(() => {
+            this.chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: breakdown.map(cat => cat.name),
+                    datasets: [{
+                        data: breakdown.map(cat => cat.amount),
+                        backgroundColor: breakdown.map(cat => cat.color),
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 0 // Disable animations to prevent infinite loop
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: (context) => {
-                                const label = context.label || '';
-                                const value = context.parsed || 0;
-                                return `${label}: €${value.toFixed(2)}`;
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: { family: 'Lexend', size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    return `${label}: €${value.toFixed(2)}`;
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }, 100);
     },
     
     saveAutoBudget() {
@@ -605,48 +616,56 @@ const BudgetTool = {
         
         const categories = App.data.budget.categories.filter(cat => cat.amount > 0);
         
+        // Destroy existing chart
         if (this.manualChartInstance) {
             this.manualChartInstance.destroy();
+            this.manualChartInstance = null;
         }
         
         if (categories.length === 0) {
             return;
         }
         
-        this.manualChartInstance = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: categories.map(cat => cat.name),
-                datasets: [{
-                    data: categories.map(cat => cat.amount),
-                    backgroundColor: categories.map(cat => cat.color),
-                    borderWidth: 2,
-                    borderColor: '#fff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            font: { family: 'Lexend', size: 12 }
-                        }
+        // Small delay to ensure DOM is ready
+        setTimeout(() => {
+            this.manualChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: categories.map(cat => cat.name),
+                    datasets: [{
+                        data: categories.map(cat => cat.amount),
+                        backgroundColor: categories.map(cat => cat.color),
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 0 // Disable animations to prevent infinite loop
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: (context) => {
-                                const label = context.label || '';
-                                const value = context.parsed || 0;
-                                return `${label}: €${value.toFixed(2)}`;
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: { family: 'Lexend', size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    return `${label}: €${value.toFixed(2)}`;
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }, 100);
     },
     
     showAddCategoryModal() {
