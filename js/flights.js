@@ -569,6 +569,10 @@ const FlightTracker = {
 };
 
 // Initialize when page loads
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        FlightTracker.init();
+    });
+} else {
     FlightTracker.init();
-});
+}

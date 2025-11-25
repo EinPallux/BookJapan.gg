@@ -525,6 +525,10 @@ const ProfileManager = {
 };
 
 // Initialize when page loads
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        ProfileManager.init();
+    });
+} else {
     ProfileManager.init();
-});
+}

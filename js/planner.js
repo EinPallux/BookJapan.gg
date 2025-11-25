@@ -813,6 +813,10 @@ const TripPlanner = {
 };
 
 // Initialize when page loads
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        TripPlanner.init();
+    });
+} else {
     TripPlanner.init();
-});
+}

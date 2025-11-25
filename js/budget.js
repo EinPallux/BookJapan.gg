@@ -968,6 +968,11 @@ style.textContent = `
 document.head.appendChild(style);
 
 // Initialize when page loads
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        BudgetTool.init();
+    });
+} else {
+    // DOM is already loaded, init immediately
     BudgetTool.init();
-});
+}
